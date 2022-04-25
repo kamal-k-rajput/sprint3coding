@@ -3,27 +3,38 @@ import { Login } from "./components/Login";
 import { EmployeeList } from "./components/EmployeeList";
 import { EmployeeDetails } from "./components/EmployeeDetails";
 import { Admin } from "./components/Admin";
-// import { ProtectedRoute } from "./components/PrivateRoute";
+import { ProtectedRoute } from "./components/PrivateRoute";
 import { Navbar } from "./components/Navbar";
 import { Logout } from "./components/Logout";
-import { Route, Routes, Router } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Navbar />
-        <Routes>
-          {/* Routes here */}
+      <Navbar />
 
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/logout" element={<Logout />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
-          <Route path="/employees" element={<EmployeeList />}></Route>
-          <Route path="/employees/:id" element={<EmployeeDetails />}></Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/logout" element={<Logout />}></Route>
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route path="/employees" element={<EmployeeList />}></Route>
+        <Route
+          path="/employees/:id"
+          element={
+            <ProtectedRoute>
+              <EmployeeDetails />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }
